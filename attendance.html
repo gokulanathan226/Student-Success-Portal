@@ -1,0 +1,119 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance Tracker | StudentHub</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="app-container">
+
+        <aside class="sidebar">
+            <h2 class="logo">🎓 StudentHub</h2>
+            <p class="sidebar-label">MAIN MENU</p>
+
+            <nav>
+                <a href="/" class="nav-link">🏠 Dashboard</a>
+                <a href="/attendance" class="nav-link active">📅 Attendance Tracker</a>
+                <a href="/marks" class="nav-link">📚 Marks & Syllabus</a>
+                <a href="/study-planner" class="nav-link">📝 Study Planner</a>
+                <a href="/analytics" class="nav-link">📈 Progress Analytics</a>
+                <a href="/recommendations" class="nav-link">💡 Smart Recommendations</a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <p>Small steps, big success!</p>
+            </div>
+        </aside>
+
+        <main class="main-content">
+
+            <header class="topbar">
+                <div>
+                    <h1>Attendance Tracker</h1>
+                    <p>Monitor your attendance and stay on track.</p>
+                </div>
+                <div class="profile">👤 Student</div>
+            </header>
+
+            <section class="welcome-card">
+                <div>
+                    <h2>Stay above 75%! 🎯</h2>
+                    <p>Check your attendance percentage before planning your next leave.</p>
+                </div>
+            </section>
+
+            <section class="panel attendance-panel">
+                <h2>📅 Calculate Your Attendance</h2>
+                <p>Enter the number of classes conducted and classes you attended.</p>
+
+                <form class="attendance-form" method="POST">
+                    <div>
+                        <label for="total_classes">Total classes conducted</label>
+                        <input
+                            type="number"
+                            id="total_classes"
+                            name="total_classes"
+                            min="1"
+                            step="1"
+                            required
+                            placeholder="Example: 40"
+                        >
+                    </div>
+
+                    <div>
+                        <label for="attended_classes">Classes attended</label>
+                        <input
+                            type="number"
+                            id="attended_classes"
+                            name="attended_classes"
+                            min="0"
+                            step="1"
+                            required
+                            placeholder="Example: 36"
+                        >
+                    </div>
+
+                    <button type="submit">Calculate Attendance</button>
+                </form>
+
+                {% if error %}
+                    <div class="result warning">
+                        <strong>{{ error }}</strong>
+                    </div>
+                {% endif %}
+
+                {% if result %}
+                    <div class="result {% if result.warning %}warning{% endif %}">
+                        <h2>{{ result.percentage }}%</h2>
+                        <p>
+                            You attended {{ result.attended }} out of
+                            {{ result.total }} classes.
+                        </p>
+
+                        {% if result.warning %}
+                            <p>
+                                ⚠️ Your attendance is below 75%.
+                                Please check your college attendance requirements.
+                            </p>
+                        {% else %}
+                            <p>
+                                ✅ Your attendance is at least 75%.
+                                Keep maintaining your attendance!
+                            </p>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            </section>
+
+            <footer>
+                Student Success Portal · Learn better, achieve more.
+            </footer>
+
+        </main>
+    </div>
+</body>
+</html>
+

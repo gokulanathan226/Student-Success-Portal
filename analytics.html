@@ -1,0 +1,119 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Progress Analytics | StudentHub</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="app-container">
+
+        <aside class="sidebar">
+            <h2 class="logo">🎓 StudentHub</h2>
+            <p class="sidebar-label">MAIN MENU</p>
+
+            <nav>
+                <a href="/" class="nav-link">🏠 Dashboard</a>
+                <a href="/attendance" class="nav-link">📅 Attendance Tracker</a>
+                <a href="/marks" class="nav-link">📚 Marks & Syllabus</a>
+                <a href="/study-planner" class="nav-link">📝 Study Planner</a>
+                <a href="/analytics" class="nav-link active">📈 Progress Analytics</a>
+                <a href="/recommendations" class="nav-link">💡 Smart Recommendations</a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <p>Small steps, big success!</p>
+            </div>
+        </aside>
+
+        <main class="main-content">
+
+            <header class="topbar">
+                <div>
+                    <h1>Progress Analytics</h1>
+                    <p>See how much progress you have made with your study tasks.</p>
+                </div>
+                <div class="profile">👤 Student</div>
+            </header>
+
+            <section class="welcome-card">
+                <div>
+                    <h2>Your progress, at a glance! 📊</h2>
+                    <p>Every completed task brings you closer to your goals.</p>
+                </div>
+            </section>
+
+            <section class="stats-grid">
+
+                <div class="stat-card">
+                    <span>📚 Total Tasks</span>
+                    <h2>{{ total_tasks }}</h2>
+                    <p>All study tasks</p>
+                </div>
+
+                <div class="stat-card">
+                    <span>✅ Completed Tasks</span>
+                    <h2>{{ completed_tasks }}</h2>
+                    <p>Tasks finished</p>
+                </div>
+
+                <div class="stat-card">
+                    <span>⏳ Pending Tasks</span>
+                    <h2>{{ pending_tasks }}</h2>
+                    <p>Tasks to finish</p>
+                </div>
+
+                <div class="stat-card">
+                    <span>📈 Overall Progress</span>
+                    <h2>{{ progress }}%</h2>
+                    <p>Completion rate</p>
+                </div>
+
+            </section>
+
+            <section class="panel analytics-progress">
+                <h2>🎯 Your Completion Progress</h2>
+                <p>
+                    You have completed {{ completed_tasks }} out of
+                    {{ total_tasks }} study tasks.
+                </p>
+
+                <div class="progress-track"
+                     role="progressbar"
+                     aria-label="Study task completion progress"
+                     aria-valuemin="0"
+                     aria-valuemax="100"
+                     aria-valuenow="{{ progress }}">
+                    <div class="progress-fill"
+                         style="width: {{ progress }}%;">
+                    </div>
+                </div>
+
+                <h2>{{ progress }}% completed</h2>
+
+                {% if total_tasks == 0 %}
+                    <p>📖 Add your first task in Study Planner to start tracking your progress.</p>
+                {% elif progress == 100 %}
+                    <p>🌟 Excellent! You have completed all your study tasks.</p>
+                {% elif progress >= 50 %}
+                    <p>💪 Great progress! Keep going and finish your remaining tasks.</p>
+                {% else %}
+                    <p>🚀 Start with one pending task today. Small steps make a difference!</p>
+                {% endif %}
+
+                <a href="/study-planner" class="analytics-link">
+                    Go to Study Planner →
+                </a>
+            </section>
+
+            <footer>
+                Student Success Portal · Learn better, achieve more.
+            </footer>
+
+        </main>
+    </div>
+</body>
+</html>
+

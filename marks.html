@@ -1,0 +1,118 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marks Tracker | StudentHub</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="app-container">
+
+        <aside class="sidebar">
+            <h2 class="logo">🎓 StudentHub</h2>
+            <p class="sidebar-label">MAIN MENU</p>
+
+            <nav>
+                <a href="/" class="nav-link">🏠 Dashboard</a>
+                <a href="/attendance" class="nav-link">📅 Attendance Tracker</a>
+                <a href="/marks" class="nav-link active">📚 Marks & Syllabus</a>
+                <a href="/study-planner" class="nav-link">📝 Study Planner</a>
+                <a href="/analytics" class="nav-link">📈 Progress Analytics</a>
+                <a href="/recommendations" class="nav-link">💡 Smart Recommendations</a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <p>Small steps, big success!</p>
+            </div>
+        </aside>
+
+        <main class="main-content">
+
+            <header class="topbar">
+                <div>
+                    <h1>Marks & Syllabus Tracker</h1>
+                    <p>Track your academic performance and improve your scores.</p>
+                </div>
+                <div class="profile">👤 Student</div>
+            </header>
+
+            <section class="welcome-card">
+                <div>
+                    <h2>Every mark counts! 📚</h2>
+                    <p>Calculate your subject percentage and identify where to improve.</p>
+                </div>
+            </section>
+
+            <section class="panel marks-panel">
+                <h2>📝 Calculate Your Marks</h2>
+                <p>Enter your subject name, obtained marks and maximum marks.</p>
+
+                <form method="POST" class="marks-form">
+
+                    <div>
+                        <label for="subject">Subject name</label>
+                        <input
+                            id="subject"
+                            name="subject"
+                            type="text"
+                            required
+                            placeholder="Example: Electrical Circuits"
+                        >
+                    </div>
+
+                    <div>
+                        <label for="obtained">Marks obtained</label>
+                        <input
+                            id="obtained"
+                            name="obtained"
+                            type="number"
+                            min="0"
+                            step="any"
+                            required
+                            placeholder="Example: 78"
+                        >
+                    </div>
+
+                    <div>
+                        <label for="total">Maximum marks</label>
+                        <input
+                            id="total"
+                            name="total"
+                            type="number"
+                            min="0.01"
+                            step="any"
+                            required
+                            placeholder="Example: 100"
+                        >
+                    </div>
+
+                    <button type="submit">Calculate Marks</button>
+                </form>
+
+                {% if error %}
+                    <div class="result warning">
+                        <strong>{{ error }}</strong>
+                    </div>
+                {% endif %}
+
+                {% if result %}
+                    <div class="result marks-result">
+                        <p>Subject: {{ result.subject }}</p>
+                        <h2>{{ result.percentage }}%</h2>
+                        <p>Score: {{ result.obtained }} / {{ result.total }}</p>
+                        <p>{{ result.message }}</p>
+                    </div>
+                {% endif %}
+            </section>
+
+            <footer>
+                Student Success Portal · Learn better, achieve more.
+            </footer>
+
+        </main>
+    </div>
+</body>
+</html>
+

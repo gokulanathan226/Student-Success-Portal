@@ -1,0 +1,145 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Success Portal</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="app-container">
+
+        <aside class="sidebar">
+            <h2 class="logo">🎓 StudentHub</h2>
+            <p class="sidebar-label">MAIN MENU</p>
+
+            <nav>
+                <a href="/" class="nav-link active">🏠 Dashboard</a>
+                <a href="/attendance" class="nav-link">📅 Attendance Tracker</a>
+                <a href="/marks" class="nav-link">📚 Marks & Syllabus</a>
+                <a href="/study-planner" class="nav-link">📝 Study Planner</a>
+                <a href="/analytics" class="nav-link">📈 Progress Analytics</a>
+                <a href="/recommendations" class="nav-link">💡 Smart Recommendations</a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <p>Small steps, big success!</p>
+            </div>
+        </aside>
+
+        <main class="main-content">
+
+            <header class="topbar">
+                <div>
+                    <h1>Student Dashboard</h1>
+                    <p>Welcome back! Let's make today productive.</p>
+                </div>
+                <div class="profile">👤 Student</div>
+            </header>
+
+            <section class="welcome-card">
+                <div>
+                    <h2>Your success journey starts here! 🌟</h2>
+                    <p>Track your learning, manage your time and reach your goals.</p>
+                </div>
+            </section>
+
+            <section class="stats-grid">
+
+                <div class="stat-card">
+                    <span>📅 Attendance</span>
+                    <h2>Track</h2>
+                    <p>
+                        <a href="/attendance">Check attendance →</a>
+                    </p>
+                </div>
+
+                <div class="stat-card">
+                    <span>📚 Marks & Syllabus</span>
+                    <h2>Track</h2>
+                    <p>
+                        <a href="/marks">Check marks →</a>
+                    </p>
+                </div>
+
+                <div class="stat-card">
+                    <span>✅ Tasks Completed</span>
+                    <h2>{{ completed_tasks }}</h2>
+                    <p>Completed study tasks</p>
+                </div>
+
+                <div class="stat-card">
+                    <span>⏳ Pending Tasks</span>
+                    <h2>{{ pending_tasks }}</h2>
+                    <p>Tasks waiting to be completed</p>
+                </div>
+
+            </section>
+
+            <section class="content-grid">
+
+                <div class="panel">
+                    <h2>📌 Your Study Plan</h2>
+
+                    <p>
+                        Total study tasks:
+                        <strong>{{ total_tasks }}</strong>
+                    </p>
+
+                    <p>
+                        Completed:
+                        <strong>{{ completed_tasks }}</strong>
+                    </p>
+
+                    <p>
+                        Pending:
+                        <strong>{{ pending_tasks }}</strong>
+                    </p>
+
+                    {% if total_tasks > 0 %}
+                        <p>
+                            Overall task progress:
+                            <strong>{{ ((completed_tasks / total_tasks) * 100)|round|int }}%</strong>
+                        </p>
+                    {% else %}
+                        <p>You haven't added any study tasks yet.</p>
+                    {% endif %}
+
+                    <a href="/study-planner">
+                        <button type="button">Open Study Planner</button>
+                    </a>
+                </div>
+
+                <div class="panel recommendation">
+                    <h2>💡 Smart Study Recommendation</h2>
+
+                    {% if pending_tasks > 0 %}
+                        <p>You have {{ pending_tasks }} pending task(s).</p>
+                        <p>Choose one task and focus on it for 25 minutes.</p>
+                    {% elif total_tasks > 0 %}
+                        <p>🌟 Excellent! You have completed all your current tasks.</p>
+                        <p>Add your next learning goal to keep progressing.</p>
+                    {% else %}
+                        <p>Start your success journey by creating your first study task.</p>
+                        <p>Plan your subjects and set realistic deadlines.</p>
+                    {% endif %}
+
+                    <a href="/recommendations">
+                        <button type="button">View Recommendations</button>
+                    </a>
+                </div>
+
+            </section>
+
+            <footer>
+                Student Success Portal · Learn better, achieve more.
+            </footer>
+
+        </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
+

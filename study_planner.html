@@ -1,0 +1,151 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Planner | StudentHub</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="app-container">
+
+        <aside class="sidebar">
+            <h2 class="logo">🎓 StudentHub</h2>
+            <p class="sidebar-label">MAIN MENU</p>
+
+            <nav>
+                <a href="/" class="nav-link">🏠 Dashboard</a>
+                <a href="/attendance" class="nav-link">📅 Attendance Tracker</a>
+                <a href="/marks" class="nav-link">📚 Marks & Syllabus</a>
+                <a href="/study-planner" class="nav-link active">📝 Study Planner</a>
+                <a href="/analytics" class="nav-link">📈 Progress Analytics</a>
+                <a href="/recommendations" class="nav-link">💡 Smart Recommendations</a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <p>Small steps, big success!</p>
+            </div>
+        </aside>
+
+        <main class="main-content">
+
+            <header class="topbar">
+                <div>
+                    <h1>Study Planner</h1>
+                    <p>Plan your learning and complete tasks one by one.</p>
+                </div>
+                <div class="profile">👤 Student</div>
+            </header>
+
+            <section class="welcome-card">
+                <div>
+                    <h2>Plan today. Achieve tomorrow! 🎯</h2>
+                    <p>Add your subjects, set deadlines and track your progress.</p>
+                </div>
+            </section>
+
+            <section class="panel planner-panel">
+                <h2>➕ Add a Study Task</h2>
+                <p>Create a task with a subject and deadline.</p>
+
+                {% if error %}
+                    <div class="result warning">
+                        <strong>{{ error }}</strong>
+                    </div>
+                {% endif %}
+
+                <form class="planner-form" action="{{ url_for('study_planner') }}" method="POST">
+
+                    <div>
+                        <label for="task">Task name</label>
+                        <input
+                            type="text"
+                            id="task"
+                            name="task"
+                            placeholder="Example: Study Python loops"
+                            required
+                        >
+                    </div>
+
+                    <div>
+                        <label for="subject">Subject</label>
+                        <input
+                            type="text"
+                            id="subject"
+                            name="subject"
+                            placeholder="Example: Python"
+                            required
+                        >
+                    </div>
+
+                    <div>
+                        <label for="deadline">Deadline</label>
+                        <input
+                            type="date"
+                            id="deadline"
+                            name="deadline"
+                            required
+                        >
+                    </div>
+
+                    <button type="submit">+ Add Study Task</button>
+                </form>
+            </section>
+
+            <section class="panel tasks-panel">
+                <h2>📝 Your Study Tasks</h2>
+
+                {% if tasks %}
+                    <div class="task-list">
+                        {% for task in tasks %}
+                            <article class="task-item">
+
+                                <div class="task-info">
+                                    <h3>{{ task["task"] }}</h3>
+                                    <p>📘 Subject: {{ task["subject"] }}</p>
+                                    <p>📅 Deadline: {{ task["deadline"] }}</p>
+
+                                    {% if task["status"] == "Completed" %}
+                                        <p class="status-completed">
+                                            ✓ Completed
+                                        </p>
+                                    {% else %}
+                                        <p class="status-pending">
+                                            ⏳ Pending
+                                        </p>
+                                    {% endif %}
+                                </div>
+
+                                {% if task["status"] != "Completed" %}
+                                    <form
+                                        action="{{ url_for('complete_task', task_id=task['id']) }}"
+                                        method="POST"
+                                    >
+                                        <button class="complete-button" type="submit">
+                                            ✓ Complete
+                                        </button>
+                                    </form>
+                                {% endif %}
+
+                            </article>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p class="empty-message">
+                        📖 No study tasks yet. Add your first task above!
+                    </p>
+                {% endif %}
+            </section>
+
+            <footer>
+                Student Success Portal · Learn better, achieve more.
+            </footer>
+
+        </main>
+    </div>
+</body>
+</html>
+
+
+

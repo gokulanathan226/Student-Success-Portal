@@ -1,0 +1,85 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Study Recommendations | StudentHub</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="app-container">
+
+        <aside class="sidebar">
+            <h2 class="logo">🎓 StudentHub</h2>
+            <p class="sidebar-label">MAIN MENU</p>
+
+            <nav>
+                <a href="/" class="nav-link">🏠 Dashboard</a>
+                <a href="/attendance" class="nav-link">📅 Attendance Tracker</a>
+                <a href="/marks" class="nav-link">📚 Marks & Syllabus</a>
+                <a href="/study-planner" class="nav-link">📝 Study Planner</a>
+                <a href="/analytics" class="nav-link">📈 Progress Analytics</a>
+                <a href="/recommendations" class="nav-link active">💡 Smart Recommendations</a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <p>Small steps, big success!</p>
+            </div>
+        </aside>
+
+        <main class="main-content">
+
+            <header class="topbar">
+                <div>
+                    <h1>Smart Study Recommendations</h1>
+                    <p>Simple suggestions to make your study sessions more effective.</p>
+                </div>
+                <div class="profile">👤 Student</div>
+            </header>
+
+            <section class="welcome-card">
+                <div>
+                    <h2>Your personal study guide! 🧠</h2>
+                    <p>Use these recommendations to plan your next study session.</p>
+                </div>
+            </section>
+
+            <section class="panel recommendations-panel">
+                <h2>💡 Recommended Actions</h2>
+                <p>Suggestions based on your current study tasks.</p>
+
+                {% if recommendations %}
+                    <div class="recommendations-list">
+                        {% for item in recommendations %}
+                            <article class="recommendation-card">
+                                <h3>{{ item.title }}</h3>
+                                <p>{{ item.reason }}</p>
+                                <p><strong>Action:</strong> {{ item.action }}</p>
+
+                                <a href="/study-planner" class="recommendation-link">
+                                    Open Study Planner →
+                                </a>
+                            </article>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <article class="recommendation-card">
+                        <h3>🎯 Start Your Study Journey</h3>
+                        <p>Add study tasks to receive useful recommendations.</p>
+                        <a href="/study-planner" class="recommendation-link">
+                            Add Your First Task →
+                        </a>
+                    </article>
+                {% endif %}
+            </section>
+
+            <footer>
+                Student Success Portal · Learn better, achieve more.
+            </footer>
+
+        </main>
+    </div>
+</body>
+</html>
+
